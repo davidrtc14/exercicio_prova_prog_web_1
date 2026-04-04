@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Produtos</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<h1>Produtos</h1>
+<div class="container">
+<table border="1">
+  <thead>
+    <tr>
+      <th>
+        Código
+      </th>
+      <th>
+        Preço
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="grupo : ${grupos}">
+      <td th:text="${grupo.key}"></td>
+      <td th:text="${grupo.value}"></td>
+    </tr>
+  </tbody>
+</table>
+<table border="1">
+  <thead>
+  <tr>
+    <th>
+      Preço Total da Nota
+    </th>
+    <th>
+      % de Desconto
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="desconto : ${descontos}">
+    <td th:text="${desconto.key}"></td>
+    <td th:text="${desconto.value}"></td>
+  </tr>
+  </tbody>
+</table>
+</div> <br>
+
+<form th:action="@{/pedido}" method="post">
+  <div class="input_container">
+    <label for="codigo">Código</label>
+    <input type="number" id="codigo" name="codigo">
+
+    <label for="quantidade">Quantidade</label>
+    <input type="number" id="quantidade" name="quantidade"> <br>
+  </div>
+
+  <button type="submit">Fazer pedido</button>
+</form>
+<p th:if="${erro}" th:text="${erro}" style="color:red;"></p>
+
+<div th:if="${pedido != null}">
+  <h2>Dados da Compra</h2>
+
+  <table border="1">
+    <tr>
+      <th>Preço Unitário</th>
+      <td th:text="'R$ ' + ${pedido.precoUnitario}"></td>
+    </tr>
+    <tr>
+      <th>Preço Total</th>
+      <td th:text="'R$ ' + ${pedido.precoTotal}"></td>
+    </tr>
+    <tr>
+      <th>Desconto</th>
+      <td th:text="'R$ ' + ${pedido.valorDesconto}"></td>
+    </tr>
+    <tr>
+      <th>Preço Final</th>
+      <td th:text="'R$ ' + ${pedido.precoFinal}"></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
